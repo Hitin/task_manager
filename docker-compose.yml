@@ -1,7 +1,6 @@
 version: '3.7'
 services:
   web:
-    user: "1000:1000"
     build: .
     depends_on:
       - db
