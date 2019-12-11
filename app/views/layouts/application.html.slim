@@ -19,7 +19,7 @@ html lang="en"
           li= link_to "Board", board_path
           - if current_user
             li= link_to current_user.first_name
-            li= link_to "Log out", session_path, method: "delete", data: { confirm: "confirm?" }, remote: true
+            li= link_to "Log out", session_path, method: "delete", data: { confirm: "confirm?" }
           - else
             li= link_to "Sign in", new_session_path
             li= link_to "Sign up", new_developer_path
@@ -30,6 +30,6 @@ html lang="en"
         = bootstrap_flash
         = yield
 
-  footer
-    p
-    p &copy; Company 2019
+    footer
+      p
+      p &copy; Company 2019
