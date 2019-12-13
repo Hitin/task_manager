@@ -38,6 +38,7 @@ gem "twitter-bootstrap-rails"
 gem "jquery-rails"
 gem 'coveralls', require: false
 gem 'rollbar'
+gem 'newrelic_rpm'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
