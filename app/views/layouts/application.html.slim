@@ -28,7 +28,7 @@ html lang="en"
           .col-lg-3
             ul.nav.navbar-nav
               -if current_user
-                li= current_user.first_name
+                li= current_user.name
                 li= link_to "Log out", session_path, method: "delete", data: { confirm: "confirm?" }
               -else
                 li= link_to "Sign in", new_session_path
