@@ -9,4 +9,9 @@ class User < ApplicationRecord
   validates :email, presence: true,
                     uniqueness: true, 
                     format: { with: /.*@.*/, message: "doesn't contein sym @" }
+
+  def name
+    "#{first_name} #{last_name}"
+  end
+
 end

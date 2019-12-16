@@ -1,0 +1,3 @@
+= simple_form_for [:admin, @user], as: :user, url: admin_user_url do |f|
+  = render partial: "form", locals: {f: f, label_action: 'Update'}
+  = f.button :submit, "Confirm"
