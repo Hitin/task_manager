@@ -1,4 +1,5 @@
 class Api::V1::ApplicationController < Api::ApplicationController
+  include AuthHelper
   def build_meta_tasks(collection)
     {
       count: collection.count,

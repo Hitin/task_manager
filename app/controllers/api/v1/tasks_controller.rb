@@ -24,7 +24,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   end
 
   def create
-    task = Task.new(task_params)
+    task = current_user.my_tasks.new(task_params)
 
     if task.save
       respond_with(task, location: nil)
@@ -34,7 +34,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   end
 
   def update
-    task = Task.find(params[:id])
+    task = current_user.my_tasks.find(params[:id])
 
     if task.update(task_params)
       render(json: task)
@@ -44,7 +44,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   end
 
   def destroy
-    task = Task.find(params[:id])
+    task = current_user.my_tasks.find(params[:id])
       if task.destroy
         head(:ok)
       else
@@ -55,6 +55,6 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :description, :author_id, :assignee_id, :state_event)
+    params.require(:task).permit(:name, :description, :assignee_id, :state_event).merge({ author_id: current_user.id })
   end
 end
