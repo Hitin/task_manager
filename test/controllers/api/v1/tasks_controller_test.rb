@@ -15,12 +15,10 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
   end
 
   test 'should post create' do
-    skip
     author = create :user
-    sign_in(author)
     assignee = create :user
     task_attributes = attributes_for(:task)
-      .merge({ assignee_id: assignee.id })
+      .merge({ author_id: author.id, assignee_id: assignee.id })
     post :create, params: { task: task_attributes, format: :json }
     assert_response :created
 
@@ -47,7 +45,6 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
   end
 
   test 'should delete destroy' do
-    skip
     author = create :user
     task = create :task, author: author
     delete :destroy, params: { id: task.id, format: :json }
