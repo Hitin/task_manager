@@ -5,6 +5,8 @@ env:
 extends:
   - 'eslint:recommended'
   - 'plugin:react/recommended'
+  - 'plugin:prettier/recommended'
+  - 'prettier'
 globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
@@ -15,4 +17,7 @@ parserOptions:
   sourceType: module
 plugins:
   - react
-rules: {}
+  - prettier
+rules: {
+  "prettier/prettier": "error"
+}
