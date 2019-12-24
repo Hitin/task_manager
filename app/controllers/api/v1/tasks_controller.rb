@@ -1,6 +1,4 @@
 class Api::V1::TasksController < Api::V1::ApplicationController
-  respond_to :html, :json
-
   def index
     q_params = params[:q] || { s: 'id asc' }
 
@@ -29,7 +27,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
     if task.save
       respond_with(task, location: nil)
     else
-      render(json: { errors: task.errors }, status: :unprocessable_entity)
+      render(json: { errors: task.errors.messages }, status: :unprocessable_entity)
     end
   end
 
@@ -39,7 +37,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
     if task.update(task_params)
       render(json: task)
     else
-      render(json: { errors: task.errors }, status: :unprocessable_entity)
+      render(json: { errors: task.errors.messages }, status: :unprocessable_entity)
     end
   end
 
@@ -48,7 +46,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
       if task.destroy
         head(:ok)
       else
-        render(json: { errors: task.errors }, status: :unprocessable_entity)
+        render(json: { errors: task.errors.messages }, status: :unprocessable_entity)
       end
   end
 
