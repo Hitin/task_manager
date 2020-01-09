@@ -32,8 +32,9 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   end
 
   def update
-    task = current_user.my_tasks.find(params[:id])
-
+    #task = current_user.my_tasks.find(params[:id])
+    task = Task.find(params[:id])
+    
     if task.update(task_params)
       render(json: task)
     else
