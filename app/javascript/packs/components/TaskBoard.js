@@ -2,6 +2,8 @@ import React from 'react'
 import Board from 'react-trello'
 import { fetch } from './Fetch';
 import LaneHeader from './LaneHeader';
+import { Button } from 'react-bootstrap';
+import AddPopup from './AddPopup';
 
 const components = {
   LaneHeader: LaneHeader
@@ -20,8 +22,20 @@ export default class TasksBoard extends React.Component {
         released: null,
         archived: null
       },
+      addPopupShow: false,
     }
   };
+
+  handleAddShow = () => {
+    this.setState({ addPopupShow: true });
+  }
+
+  handleAddClose = ( added = false ) => {
+    this.setState({ addPopupShow: false });
+    if (added == true) {
+      this.loadLine('new_task');
+    };
+  }
 
   handleDragEnd = (cardId, sourceLaneId, targetLaneId) => {
     fetch('PUT', window.Routes.api_v1_task_path({id: cardId}, { format: 'json' }), { task: { state_event: targetLaneId } })
@@ -106,6 +120,12 @@ export default class TasksBoard extends React.Component {
 
     return <div>
       <h1>Your tasks</h1>
+      <Button 
+        variant="primary" 
+        onClick={this.handleAddShow}
+      >
+        Create new task
+      </Button>
       <Board 
         data={this.getBoard()}
         onLaneScroll={this.onLaneScroll}
@@ -114,6 +134,10 @@ export default class TasksBoard extends React.Component {
         laneDraggable={false}
         handleDragEnd={this.handleDragEnd}
         components={components} 
+      />
+      <AddPopup
+        show = {this.state.addPopupShow}
+        onClose={this.handleAddClose}
       />
     </div>;
   }
