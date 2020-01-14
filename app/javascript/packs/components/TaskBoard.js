@@ -4,6 +4,7 @@ import { fetch } from './Fetch';
 import LaneHeader from './LaneHeader';
 import { Button } from 'react-bootstrap';
 import AddPopup from './AddPopup';
+import EditPopup from './EditPopup';
 
 const components = {
   LaneHeader: LaneHeader
@@ -23,6 +24,8 @@ export default class TasksBoard extends React.Component {
         archived: null
       },
       addPopupShow: false,
+      editPopupShow: false,
+      editCardId: null
     }
   };
 
@@ -58,7 +61,7 @@ export default class TasksBoard extends React.Component {
   }
 
   generateLane(id, title) {
-    const tasks = this.state[id];
+    const tasks = this.state.board[id];
 
     return {
       id,
@@ -105,7 +108,10 @@ export default class TasksBoard extends React.Component {
   loadLine(state, page = 1) {
     this.fetchLine(state, page).then(( data ) => {
       this.setState({
-        [state]: data
+        board: {
+          ...this.state.board,
+          [state]: data
+        }
       });
     });
   }
@@ -114,6 +120,34 @@ export default class TasksBoard extends React.Component {
     return fetch('GET', window.Routes.api_v1_tasks_path({ q: { state_eq: state }, page: page, per_page: 10, format: 'json' })).then(({data}) => {
       return data;
     })
+  }
+
+  
+
+  onCardClick = (cardId) => {
+    this.setState({editCardId: cardId});
+    this.handleEditShow();
+  }
+
+  handleEditClose = ( edited = '' ) => {
+    this.setState({ editPopupShow: false, editCardId: null});
+    switch (edited) {
+      case 'new_task':
+      case 'in_development':
+      case 'in_qa':
+      case 'in_code_review':
+      case 'ready_for_release':
+      case 'released':
+      case 'archived':
+        this.loadLine(edited);
+        break;
+      default:
+        break;
+    }
+  }
+
+  handleEditShow = () => {
+    this.setState({ editPopupShow: true });
   }
 
   render() {
@@ -129,11 +163,17 @@ export default class TasksBoard extends React.Component {
       <Board 
         data={this.getBoard()}
         onLaneScroll={this.onLaneScroll}
+        onCardClick={this.onCardClick}
         cardsMeta={this.state}
         draggable
         laneDraggable={false}
         handleDragEnd={this.handleDragEnd}
         components={components} 
+      />
+      <EditPopup
+        show = {this.state.editPopupShow}
+        onClose={this.handleEditClose}
+        cardId ={this.state.editCardId}
       />
       <AddPopup
         show = {this.state.addPopupShow}
