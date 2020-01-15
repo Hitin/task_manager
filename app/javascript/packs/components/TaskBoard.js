@@ -40,14 +40,6 @@ export default class TasksBoard extends React.Component {
     };
   }
 
-  handleDragEnd = (cardId, sourceLaneId, targetLaneId) => {
-    fetch('PUT', window.Routes.api_v1_task_path({id: cardId}, { format: 'json' }), { task: { state_event: targetLaneId } })
-      .then(() => {
-        this.loadLine(sourceLaneId);
-        this.loadLine(targetLaneId);
-      });
-  }
-
   onLaneScroll = (requestedPage, state) => {
     return this.fetchLine(state, requestedPage).then(({items}) => {
       return items.map((task) => {
@@ -121,7 +113,18 @@ export default class TasksBoard extends React.Component {
       return data;
     })
   }
-
+  handleDragEnd = (cardId, sourceLaneId, targetLaneId) => {
+    fetch('PUT', window.Routes.api_v1_task_path({id: cardId}, { format: 'json' }), { task: { state_event: targetLaneId } })
+      .then(() => {
+        this.loadLine(sourceLaneId);
+        this.loadLine(targetLaneId);
+      })
+      .catch((error) => {
+        console.log(error);
+        this.loadLine(sourceLaneId);
+        this.loadLine(targetLaneId);
+      });
+    }
   
 
   onCardClick = (cardId) => {
@@ -182,4 +185,3 @@ export default class TasksBoard extends React.Component {
     </div>;
   }
 }
-
