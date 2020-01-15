@@ -1,36 +1,39 @@
 import React from 'react';
 import { Modal, Form,  Button, FormGroup, FormLabel , FormControl } from 'react-bootstrap';
 import { fetch } from './Fetch';
+import UserSelect from './UserSelect';
 
 export default class AddPopup extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      name: '',
-      description: '',
-      assignee: {
-        id: null,
-        first_name: null,
-        last_name:  null,
-        email: null
+      task: {
+        name: '',
+        description: '',
+        assignee: {
+          id: null,
+          first_name: null,
+          last_name:  null,
+          email: null
+        }
       }
     }
   };
 
   handleNameChange = (e) => {
-    this.setState({ name: e.target.value });
+    this.setState({ task: { ...this.state.task, name: e.target.value }});
   }
 
   handleDecriptionChange = (e) => {
-    this.setState({ description: e.target.value });
+    this.setState({ task: { ...this.state.task, description: e.target.value }});
   }
 
   handleCardAdd = () => {
     fetch('POST', window.Routes.api_v1_tasks_path(), {
       task: {
-        name: this.state.name,
-        description: this.state.description,
-        assignee_id: this.state.assignee.id
+        name: this.state.task.name,
+        description: this.state.task.description,
+        assignee_id: this.state.task.assignee.id
       }
     }).then( response => {
     if (response.statusText == 'Created') {
@@ -40,6 +43,9 @@ export default class AddPopup extends React.Component {
         alert(response.status + ' - ' + response.statusText);
       }
     });
+  }
+  handleAssigneeChange = (value) => {
+    this.setState({ task: { ...this.state.task, assignee: value }});
   }
 
   render () {
@@ -57,7 +63,7 @@ export default class AddPopup extends React.Component {
               <Form.Label>Task name:</Form.Label>
               <Form.Control
                 type="text"
-                value={this.state.name}
+                value={this.state.task.name}
                 placeholder='Set the name for the task'
                 onChange={this.handleNameChange}
               />
@@ -66,9 +72,18 @@ export default class AddPopup extends React.Component {
               <Form.Label>Task description:</Form.Label>
               <Form.Control
                 as="textarea"
-                value={this.state.description}
+                value={this.state.task.description}
                 placeholder='Set the description for the task'
                 onChange={this.handleDecriptionChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formTaskAssignee">
+              <Form.Label>Assignee:</Form.Label>
+              <UserSelect
+                id="Assignee"
+                isDisabled={false}
+                value={this.state.task.assignee}
+                onChange={this.handleAssigneeChange}
               />
             </Form.Group>
           </Form>
