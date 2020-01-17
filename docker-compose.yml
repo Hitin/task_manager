@@ -9,7 +9,8 @@ services:
       - ~/.bash_history:/root/.bash_history
       - bundle_cache:/bundle_cache
     ports:
-      - 3000:3000
+      - "3000:3000"
+      - "3035:3035"
     environment:
       - BUNDLE_PATH=/bundle_cache
       - DATABASE_HOST=db
@@ -22,6 +23,5 @@ services:
     image: busybox
     volumes:
       - bundle_cache:/bundle_cache
-
 volumes:
   bundle_cache:
