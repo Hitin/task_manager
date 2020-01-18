@@ -1,4 +1,5 @@
 import React from 'react'
+import { hot } from 'react-hot-loader/root';
 import Board from 'react-trello'
 import { fetch } from './Fetch';
 import LaneHeader from './LaneHeader';
@@ -10,7 +11,8 @@ const components = {
   LaneHeader: LaneHeader
   }
 
-export default class TasksBoard extends React.Component {
+class TasksBoard extends React.Component {
+//const TasksBoard = () => {
   constructor(props){
     super(props)
     this.state = {
@@ -185,3 +187,5 @@ export default class TasksBoard extends React.Component {
     </div>;
   }
 }
+
+export default hot(TasksBoard);
