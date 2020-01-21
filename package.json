@@ -3,7 +3,6 @@
   "private": true,
   "dependencies": {
     "@babel/preset-react": "^7.7.4",
-    "@hot-loader/react-dom": "npm:react-dom",
     "@rails/actioncable": "^6.0.0-alpha",
     "@rails/activestorage": "^6.0.0-alpha",
     "@rails/ujs": "^6.0.0-alpha",
@@ -20,6 +19,7 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "@hot-loader/react-dom": "npm:react-dom",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-prettier": "^3.1.2",
