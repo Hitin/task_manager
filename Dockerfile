@@ -17,4 +17,4 @@ COPY . /task_manager
 
 EXPOSE 3000
 EXPOSE 3035
-CMD bundle exec foreman start -f Procfile.dev
+CMD bundle exec foreman start
