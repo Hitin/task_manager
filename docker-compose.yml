@@ -2,6 +2,7 @@ version: '3.7'
 services:
   web:
     build: .
+    command: bundle exec foreman start -f Procfile.dev
     depends_on:
       - db
     volumes:
