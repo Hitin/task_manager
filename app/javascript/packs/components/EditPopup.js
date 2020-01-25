@@ -44,11 +44,13 @@ export default class EditPopup extends React.Component {
   }
 
   handleNameChange = (e) => {
-    this.setState({ task: { ...this.state.task, name: e.target.value }});
+    const { id, name, description, state, author, assignee } = this.state.task;
+    this.setState({ task: { id, description, state, author, assignee, name: e.target.value }});
   }
 
   handleDecriptionChange = (e) => {
-    this.setState({ task: { ...this.state.task, description: e.target.value }});
+    const { id, name, description, state, author, assignee } = this.state.task;
+    this.setState({ task: { id, name, state, author, assignee, description: e.target.value }});
   }
 
   handleCardEdit = () => {
@@ -80,11 +82,13 @@ export default class EditPopup extends React.Component {
   }
 
   handleAuthorChange = (value) => {
-    this.setState({ task: { ...this.state.task, author: value }});
+    const { id, name, description, state, author, assignee } = this.state.task;
+    this.setState({ task: { id, name, description, state, assignee, author: value }});
   }
 
   handleAssigneeChange = (value) => {
-    this.setState({ task: { ...this.state.task, assignee: value }});
+    const { id, name, description, state, author, assignee } = this.state.task;
+    this.setState({ task: { id, name, description, state, author, assignee: value }});
   }
 
   render () {

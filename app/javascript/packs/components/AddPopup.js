@@ -21,11 +21,13 @@ export default class AddPopup extends React.Component {
   };
 
   handleNameChange = (e) => {
-    this.setState({ task: { ...this.state.task, name: e.target.value }});
+    const { description, assignee, name } = this.state.task;
+    this.setState({ task: { description, assignee, name: e.target.value }});
   }
 
   handleDecriptionChange = (e) => {
-    this.setState({ task: { ...this.state.task, description: e.target.value }});
+    const { description, assignee, name } = this.state.task;
+    this.setState({ task: { description: e.target.value, assignee, name }});
   }
 
   handleCardAdd = () => {
@@ -45,7 +47,8 @@ export default class AddPopup extends React.Component {
     });
   }
   handleAssigneeChange = (value) => {
-    this.setState({ task: { ...this.state.task, assignee: value }});
+    const { description, assignee, name } = this.state.task;
+    this.setState({ task: { description, assignee: value, name }});
   }
 
   render () {
