@@ -2,6 +2,7 @@ version: '3.7'
 services:
   web:
     build: .
+    command: bundle exec foreman start -f Procfile.dev
     depends_on:
       - db
     volumes:
@@ -9,7 +10,8 @@ services:
       - ~/.bash_history:/root/.bash_history
       - bundle_cache:/bundle_cache
     ports:
-      - 3000:3000
+      - "3000:3000"
+      - "3035:3035"
     environment:
       - BUNDLE_PATH=/bundle_cache
       - DATABASE_HOST=db
@@ -22,6 +24,5 @@ services:
     image: busybox
     volumes:
       - bundle_cache:/bundle_cache
-
 volumes:
   bundle_cache:

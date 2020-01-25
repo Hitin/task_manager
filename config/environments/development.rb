@@ -3,16 +3,16 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   config.after_initialize do
     Bullet.enable = true
-    Bullet.sentry = true
+    #Bullet.sentry = true
     Bullet.alert = true
     Bullet.bullet_logger = true
     Bullet.console = true
     Bullet.rails_logger = true
-    Bullet.honeybadger = true
-    Bullet.bugsnag = true
-    Bullet.airbrake = true
+    #Bullet.honeybadger = false
+    #Bullet.bugsnag = true
+    #Bullet.airbrake = true
     Bullet.rollbar = true
-    Bullet.add_footer = true
+    #Bullet.add_footer = true
     #Bullet.growl = true
     #Bullet.xmpp = { :account  => 'bullets_account@jabber.org',
      #               :password => 'bullets_password_for_jabber',
