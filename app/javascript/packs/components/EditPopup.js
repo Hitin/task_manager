@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Form, Button, FormGroup, FormLabel , FormControl } from 'react-bootstrap';
 import { fetch } from './Fetch';
+import UserSelect from './UserSelect';
 
 export default class EditPopup extends React.Component {
   constructor(props){
@@ -43,11 +44,13 @@ export default class EditPopup extends React.Component {
   }
 
   handleNameChange = (e) => {
-    this.setState({ task: { ...this.state.task, name: e.target.value }});
+    const { id, name, description, state, author, assignee } = this.state.task;
+    this.setState({ task: { id, description, state, author, assignee, name: e.target.value }});
   }
 
   handleDecriptionChange = (e) => {
-    this.setState({ task: { ...this.state.task, description: e.target.value }});
+    const { id, name, description, state, author, assignee } = this.state.task;
+    this.setState({ task: { id, name, state, author, assignee, description: e.target.value }});
   }
 
   handleCardEdit = () => {
@@ -55,8 +58,7 @@ export default class EditPopup extends React.Component {
       name: this.state.task.name,
       description: this.state.task.description,
       author_id: this.state.task.author.id,
-      //assignee_id: this.state.task.assignee.id,
-      state: this.state.task.state
+      assignee_id: this.state.task.assignee.id
     }).then( response => {
       if (response.statusText == 'OK') {
         this.props.onClose(this.state.task.state);
@@ -77,6 +79,16 @@ export default class EditPopup extends React.Component {
           alert('DELETE failed! ' + response.status + ' - ' + response.statusText);
         }
       });
+  }
+
+  handleAuthorChange = (value) => {
+    const { id, name, description, state, author, assignee } = this.state.task;
+    this.setState({ task: { id, name, description, state, assignee, author: value }});
+  }
+
+  handleAssigneeChange = (value) => {
+    const { id, name, description, state, author, assignee } = this.state.task;
+    this.setState({ task: { id, name, description, state, author, assignee: value }});
   }
 
   render () {
@@ -126,8 +138,25 @@ export default class EditPopup extends React.Component {
                   onChange={this.handleDecriptionChange}
                 />
               </Form.Group>
+              <Form.Group controlId="formTaskAssignee">
+              <Form.Label>Assignee:</Form.Label>
+                <UserSelect
+                  id="Assignee"
+                  isDisabled={false}
+                  value={this.state.task.assignee}
+                  onChange={this.handleAssigneeChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="formTaskAuthor">
+              <Form.Label>Author:</Form.Label>
+                <UserSelect
+                  id="Author"
+                  isDisabled={true}
+                  value={this.state.task.author}
+                  onChange={this.handleAuthorChange}
+                />
+              </Form.Group>
             </Form>
-            Author: {this.state.task.author.first_name} {this.state.task.author.last_name}
           </Modal.Body>
 
           <Modal.Footer>
